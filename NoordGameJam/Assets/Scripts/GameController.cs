@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour
 {
-	static GameController instance;
+	public static GameController instance;
 	public ResearchBuilding colonyResearchBuilding;
 	public ResearchBuilding metropolyResearchBuilding;
 	private ResearchData researchData;
@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     {
 		researchData = new ResearchData();
 
+
 		SetColonyResearch(researchData.GetNextColonyResearch());
 		SetMetropolyResearch(researchData.GetNextMetropolyResearch());
     }
@@ -28,14 +29,17 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		print(colonyCurrentTime);
 		UpdateColonyTime();
 		UpdateMetropolyTime();
     }
-    
-	void OnMetropolyResearchCompleted() {
+	public void OnResearchCompleted(Research research) {
+		
+	}
+	public void OnMetropolyResearchCompleted() {
 		SetMetropolyResearch(researchData.GetNextMetropolyResearch());
 	}
-    void OnColonyResearchCompleted()
+    public void OnColonyResearchCompleted()
     {
 		SetColonyResearch(researchData.GetNextColonyResearch());
     }
@@ -57,20 +61,22 @@ public class GameController : MonoBehaviour
     }
 
 	void SetColonyResearch(Research research) {
+		colonyCurrentTime = 0;
 		if(research == null) {
 			endGame();
 		} else {
-			colonyResearchBuilding.SetResearch(research);
+			colonyResearchBuilding.SetResearch(research, OnColonyResearchCompleted);
         }
 	}
 	void SetMetropolyResearch(Research research) {
+		metropolyCurrentTime = 0;
 		if (research == null)
 		{
 			endGame();
 		}
 		else
 		{
-			metropolyResearchBuilding.SetResearch(research);
+			metropolyResearchBuilding.SetResearch(research, OnMetropolyResearchCompleted);
 		}
 	}
 	void penality() {

@@ -1,8 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
 
 public class DepositBuilding : Building
 {
+    public enum LandType
+    {
+        Colonia,
+        Metropole
+    }
+
+    public LandType landType;
+    public Text ResourceAmount1;
+    public Text ResourceAmount2;
+    public Text ResourceAmount3;
+
     // Use this for initialization
     public new void Start()
     {
@@ -14,6 +28,29 @@ public class DepositBuilding : Building
         ResourceList.Add(new Resource("Ouro"));
         ResourceList.Add(new Resource("Armas"));
         ResourceList.Add(new Resource("Tecnologia"));
+
+        if (landType == LandType.Colonia)
+        {
+            Resource res1 = ResourceList.Find(p => p.name == "Madeira");
+            res1.registerOnUpdateCb(changeResource1);
+
+            Resource res2 = ResourceList.Find(p => p.name == "Documentação");
+            res2.registerOnUpdateCb(changeResource2);
+
+            Resource res3 = ResourceList.Find(p => p.name == "Açucar");
+            res3.registerOnUpdateCb(changeResource3);
+        }
+        else
+        {
+            Resource res1 = ResourceList.Find(p => p.name == "Ouro");
+            res1.registerOnUpdateCb(changeResource1);
+
+            Resource res2 = ResourceList.Find(p => p.name == "Armas");
+            res2.registerOnUpdateCb(changeResource2);
+
+            Resource res3 = ResourceList.Find(p => p.name == "Tecnologia");
+            res3.registerOnUpdateCb(changeResource3);
+        }
     }
 
     // Update is called once per frame
@@ -36,7 +73,7 @@ public class DepositBuilding : Building
         {
             State = BuildingState.Loading;
             nextCollect = Time.time + collectRate;
-            player.depositResources(ResourceList); //Depositar todos os recursos
+            player.depositResources(this); //Depositar todos os recursos
 
             GetComponent<SpriteRenderer>().color = Color.blue;
         }
@@ -86,4 +123,43 @@ public class DepositBuilding : Building
             GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
+
+    public void ShipInteract(Ship ship)
+    {
+        if (State == BuildingState.Idle)
+        {
+            State = BuildingState.Loading;
+            nextCollect = Time.time + collectRate;
+            ship.depositResources(ResourceList);
+            //ship.debugResources();
+            ship.collectResources(this);
+            //ship.debugResources();
+            ship.startWaiting();
+
+            GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        if (State == BuildingState.UnderAttack)
+        {
+            State = BuildingState.SavingFromAttack;
+            nextAttack = Time.time + attackRate;
+
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+    }
+
+    public void changeResource1(Resource res)
+    {
+        ResourceAmount1.text = "x" + res.value;
+    }
+
+    public void changeResource2(Resource res)
+    {
+        ResourceAmount2.text = "x" + res.value;
+    }
+
+    public void changeResource3(Resource res)
+    {
+        ResourceAmount3.text = "x" + res.value;
+    }
+
 }

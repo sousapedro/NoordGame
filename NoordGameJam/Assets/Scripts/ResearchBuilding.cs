@@ -5,7 +5,8 @@ using System.Collections;
 public class ResearchBuilding : Building
 {
 	public Research research;
-	private bool test;
+	public delegate void ResearchCompleted();
+	private ResearchCompleted onResearchCompleted;
     // Use this for initialization
     public new void Start()
     {
@@ -20,32 +21,39 @@ public class ResearchBuilding : Building
 
 		//List<Resource> list = new List<Resource>();
 		//Resource resource = new Resource("Madeira");
-		//resource.value = 20;
+		//resource.modifyResource(20);
 		//list.Add(resource);
 		//resource = new Resource("Documentação");
-		//resource.value = 20;
+		//resource.modifyResource(20);
 		//list.Add(resource);
 		//resource = new Resource("Açucar");
-		//resource.value = 20;
+		//resource.modifyResource(20);
 		//list.Add(resource);
 		//Research research = new Research(list);
 		//SetResearch(research);
 
 
-        //print("adding resources");
-        //foreach (Resource myRes in ResourceList)
-        //{
-        //    myRes.value += 100;
-        //}
+        print("adding resources");
+        foreach (Resource myRes in ResourceList)
+        {
+			myRes.modifyResource(5);
+        }
     }
+	private void Reset()
+	{
+        State = BuildingState.Idle;
+		currentCollect = 0;
+	}
 
-    // Update is called once per frame
-    public new void FixedUpdate()
+	// Update is called once per frame
+	public new void FixedUpdate()
     {
 		ChangeState();
     }
-	public void SetResearch(Research research) {
+	public void SetResearch(Research research, ResearchCompleted callback) {
+		onResearchCompleted = callback;
 		this.research = research;
+		Reset();
 	}
 	override public void Interact(Player player)
     {
@@ -66,9 +74,6 @@ public class ResearchBuilding : Building
             }
 		} else {
 			StopResearch();
-            if(test) {
-				test = true;
-            }
 		}
 	}
     void UpdateResearch()
@@ -103,6 +108,7 @@ public class ResearchBuilding : Building
 		State = BuildingState.Ready;
 		GetComponent<SpriteRenderer>().color = Color.white;
 		print("research  ended");
+		onResearchCompleted();
 	}
 
 	bool CheckResources() {
@@ -123,5 +129,19 @@ public class ResearchBuilding : Building
 			}
         }
 		return ret;
+	}
+
+	void RemoveResources() {
+
+        foreach (Resource otherRes in research.ResourceList)
+        {
+            foreach (Resource myRes in ResourceList)
+            {
+                if (myRes.name == otherRes.name)
+                {
+					myRes.modifyResource(-otherRes.value);
+                }
+            }
+        }
 	}
 }

@@ -28,7 +28,7 @@ public class ResourceBuilding : Building
             State = BuildingState.Idle;
             foreach (Resource res in ResourceList)
             {
-                res.value += 1;
+                res.modifyResource(1);
             }
             player.collectResources(ResourceList);
 

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 
     private string HorizontalAxis = "Horizontal";
     private string VerticalAxis = "Vertical";
+    private string ActionBtn;
 
     public List<Resource> MyResources;
 	// Use this for initialization
@@ -23,6 +24,12 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         HorizontalAxis += playerId;
         VerticalAxis += playerId;
+        
+        if (playerId == 1)
+            ActionBtn = "space";
+        else if (playerId == 2)
+            ActionBtn = "[0]";
+
         if (Type == PlayerType.Colonia)
         {
             MyResources.Add(new Resource("Madeira"));
@@ -39,7 +46,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+     //   print("" + KeyCode.Keypad0);
 	}
 
     void FixedUpdate()
@@ -55,29 +62,37 @@ public class Player : MonoBehaviour {
         rb.velocity  = movement * Speed;
 
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            foreach (Resource res in MyResources)
-            {
-                print(res.name + ":" + res.value);
-            }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    foreach (Resource res in MyResources)
+        //    {
+        //        print(res.name + ":" + res.value);
+        //    }
             
-        }
+        //}
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(ActionBtn))
         {
             Building building = other.GetComponent<Building>();
-			building.Interact(this);
+			if(building != null) {
+				building.Interact(this);
+            }
            // GameObject GO = other.gameobject;
 		} else if (Input.GetKey("space")) {
             Building building = other.GetComponent<Building>();
-			building.WhileInteracting(this);
+			if (building != null)
+			{
+				building.WhileInteracting(this);
+			}
 		} else {
             Building building = other.GetComponent<Building>();
-            building.EndInteraction(this);
+			if (building != null)
+			{
+				building.EndInteraction(this);
+			}
 		}
     }
 
@@ -89,23 +104,26 @@ public class Player : MonoBehaviour {
             {
                 if (myRes.name == otherRes.name)
                 {
-                    myRes.value += otherRes.value;// 1;
-                    otherRes.value = 0;
+                    myRes.modifyResource(otherRes.value);// 1;
+                    otherRes.modifyResource(-otherRes.value);
                 }
             }
 	    }
     }
 
-    public void depositResources(List<Resource> resources)
+    public void depositResources(DepositBuilding depot)
     {
+        List<Resource> resources = depot.ResourceList;
+
         foreach (Resource myRes in MyResources)
         {
             foreach (Resource otherRes in resources)
             {
                 if (myRes.name == otherRes.name)
                 {
-                    otherRes.value += myRes.value;// 1;
-                    myRes.value = 0;
+                    otherRes.modifyResource(myRes.value);// 1;
+                    //depot.ResourceAmount.Find(p => p[myRes.value
+                    myRes.modifyResource(-myRes.value);
                 }
             }
         }
