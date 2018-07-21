@@ -43,15 +43,6 @@ public class ResearchBuilding : Building
     public new void FixedUpdate()
     {
 		ChangeState();
-  //      UpdateGalpão();
-		//if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
-        //{
-        //    foreach (Resource res in ResourceList)
-        //    {
-        //        print(res.name + ":" + res.value);
-        //    }
-
-        //}
     }
 	public void SetResearch(Research research) {
 		this.research = research;

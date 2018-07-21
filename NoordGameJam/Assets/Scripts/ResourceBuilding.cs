@@ -16,7 +16,6 @@ public class ResourceBuilding : Building
     }
 
 	override public void Interact(Player player) {
-		print("printing");
 		if (State == BuildingState.Idle)
         {
             State = BuildingState.Generating;
