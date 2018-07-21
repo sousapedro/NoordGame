@@ -78,10 +78,7 @@ public class Player : MonoBehaviour {
         {
             print("space key was pressed");
             Building building = other.GetComponent<Building>();
-            if(building.Type != Building.BuildingTypes.Galpão)
-                other.GetComponent < Building >().CollectResources(this);
-            else if(building.Type == Building.BuildingTypes.Galpão)
-                other.GetComponent < Building >().DepositBuilding(this);
+			building.Interact(this);
         }
     }
 

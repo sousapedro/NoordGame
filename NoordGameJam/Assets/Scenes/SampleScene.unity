@@ -147,7 +147,9 @@ MonoBehaviour:
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &197824337
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -541,8 +543,8 @@ GameObject:
   - component: {fileID: 768820077}
   - component: {fileID: 768820076}
   - component: {fileID: 768820075}
-  - component: {fileID: 768820074}
   - component: {fileID: 768820078}
+  - component: {fileID: 768820074}
   m_Layer: 0
   m_Name: "A\xE7ucar"
   m_TagString: Untagged
@@ -558,14 +560,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 768820073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d16d752afee50346b9e4990d59ea78c, type: 3}
+  m_Script: {fileID: 11500000, guid: 994dd1d7e9ed2445691090a1437a4b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &768820075
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -661,8 +665,8 @@ GameObject:
   - component: {fileID: 1061277875}
   - component: {fileID: 1061277874}
   - component: {fileID: 1061277873}
-  - component: {fileID: 1061277872}
   - component: {fileID: 1061277871}
+  - component: {fileID: 1061277872}
   m_Layer: 0
   m_Name: "Galp\xE3o"
   m_TagString: Untagged
@@ -690,14 +694,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1061277870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d16d752afee50346b9e4990d59ea78c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e72942a8796f40558167900f009a06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 6
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &1061277873
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -781,8 +787,8 @@ GameObject:
   - component: {fileID: 1268568652}
   - component: {fileID: 1268568651}
   - component: {fileID: 1268568650}
-  - component: {fileID: 1268568649}
   - component: {fileID: 1268568653}
+  - component: {fileID: 1268568649}
   m_Layer: 0
   m_Name: Madeira
   m_TagString: Untagged
@@ -798,14 +804,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1268568648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d16d752afee50346b9e4990d59ea78c, type: 3}
+  m_Script: {fileID: 11500000, guid: 994dd1d7e9ed2445691090a1437a4b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &1268568650
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -901,8 +909,8 @@ GameObject:
   - component: {fileID: 1486674265}
   - component: {fileID: 1486674264}
   - component: {fileID: 1486674263}
-  - component: {fileID: 1486674262}
   - component: {fileID: 1486674266}
+  - component: {fileID: 1486674262}
   m_Layer: 0
   m_Name: Ouro
   m_TagString: Untagged
@@ -918,14 +926,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1486674261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d16d752afee50346b9e4990d59ea78c, type: 3}
+  m_Script: {fileID: 11500000, guid: 994dd1d7e9ed2445691090a1437a4b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 3
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &1486674263
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1021,8 +1031,8 @@ GameObject:
   - component: {fileID: 1924927855}
   - component: {fileID: 1924927854}
   - component: {fileID: 1924927853}
-  - component: {fileID: 1924927852}
   - component: {fileID: 1924927856}
+  - component: {fileID: 1924927852}
   m_Layer: 0
   m_Name: "Documenta\xE7\xE3o"
   m_TagString: Untagged
@@ -1038,14 +1048,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1924927851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d16d752afee50346b9e4990d59ea78c, type: 3}
+  m_Script: {fileID: 11500000, guid: 994dd1d7e9ed2445691090a1437a4b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &1924927853
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1165,7 +1177,9 @@ MonoBehaviour:
   ResourceList: []
   State: 0
   collectRate: 0.5
+  nextCollect: 0
   attackRate: 0.5
+  nextAttack: 0
 --- !u!54 &2067289122
 Rigidbody:
   m_ObjectHideFlags: 0
