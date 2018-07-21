@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 
     private string HorizontalAxis = "Horizontal";
     private string VerticalAxis = "Vertical";
+    private string ActionBtn;
 
     public List<Resource> MyResources;
 	// Use this for initialization
@@ -23,6 +24,12 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         HorizontalAxis += playerId;
         VerticalAxis += playerId;
+        
+        if (playerId == 1)
+            ActionBtn = "space";
+        else if (playerId == 2)
+            ActionBtn = "[0]";
+
         if (Type == PlayerType.Colonia)
         {
             MyResources.Add(new Resource("Madeira"));
@@ -39,7 +46,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+     //   print("" + KeyCode.Keypad0);
 	}
 
     void FixedUpdate()
@@ -55,19 +62,19 @@ public class Player : MonoBehaviour {
         rb.velocity  = movement * Speed;
 
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            foreach (Resource res in MyResources)
-            {
-                print(res.name + ":" + res.value);
-            }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    foreach (Resource res in MyResources)
+        //    {
+        //        print(res.name + ":" + res.value);
+        //    }
             
-        }
+        //}
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(ActionBtn))
         {
             print("space key was pressed");
             Building building = other.GetComponent<Building>();
@@ -75,7 +82,6 @@ public class Player : MonoBehaviour {
                 other.GetComponent < Building >().CollectResources(this);
             else if(building.Type == Building.BuildingTypes.Galpão)
                 other.GetComponent < Building >().DepositBuilding(this);
-           // GameObject GO = other.gameobject;
         }
     }
 
