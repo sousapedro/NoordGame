@@ -90,23 +90,26 @@ public class Player : MonoBehaviour {
             {
                 if (myRes.name == otherRes.name)
                 {
-                    myRes.value += otherRes.value;// 1;
-                    otherRes.value = 0;
+                    myRes.modifyResource(otherRes.value);// 1;
+                    otherRes.modifyResource(-otherRes.value);
                 }
             }
 	    }
     }
 
-    public void depositResources(List<Resource> resources)
+    public void depositResources(DepositBuilding depot)
     {
+        List<Resource> resources = depot.ResourceList;
+
         foreach (Resource myRes in MyResources)
         {
             foreach (Resource otherRes in resources)
             {
                 if (myRes.name == otherRes.name)
                 {
-                    otherRes.value += myRes.value;// 1;
-                    myRes.value = 0;
+                    otherRes.modifyResource(myRes.value);// 1;
+                    //depot.ResourceAmount.Find(p => p[myRes.value
+                    myRes.modifyResource(-myRes.value);
                 }
             }
         }
