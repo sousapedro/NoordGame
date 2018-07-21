@@ -17,25 +17,23 @@ public class Player : MonoBehaviour {
     private string HorizontalAxis = "Horizontal";
     private string VerticalAxis = "Vertical";
 
-    public Resource Resource1;
-    public Resource Resource2;
-    public Resource Resource3;
+    public List<Resource> MyResources;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         rb = GetComponent<Rigidbody>();
         HorizontalAxis += playerId;
         VerticalAxis += playerId;
         if (Type == PlayerType.Colonia)
         {
-            Resource1 = new Resource("Madeira");
-            Resource2 = new Resource("Documentação");
-            Resource3 = new Resource("Açucar");
+            MyResources.Add(new Resource("Madeira"));
+            MyResources.Add(new Resource("Documentação"));
+            MyResources.Add(new Resource("Açucar"));
         }
         else
         {
-            Resource1 = new Resource("Ouro");
-            Resource2 = new Resource("Armas");
-            Resource3 = new Resource("Tecnologia");
+            MyResources.Add(new Resource("Ouro"));
+            MyResources.Add(new Resource("Armas"));
+            MyResources.Add(new Resource("Tecnologia"));
         }
 	}
 	
@@ -55,25 +53,58 @@ public class Player : MonoBehaviour {
 		Vector3 movement = new Vector3 (moveHorizontal, moveVertical, 0.0f);
 
         rb.velocity  = movement * Speed;
+
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            foreach (Resource res in MyResources)
+            {
+                print(res.name + ":" + res.value);
+            }
+            
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown("space"))
         {
-           // GameObject GO = other.gameobject;
             print("space key was pressed");
+            Building building = other.GetComponent<Building>();
+            if(building.Type != Building.BuildingTypes.Galpão)
+                other.GetComponent < Building >().CollectResources(this);
+            else if(building.Type == Building.BuildingTypes.Galpão)
+                other.GetComponent < Building >().DepositBuilding(this);
+           // GameObject GO = other.gameobject;
         }
-        //if (stay)
-        {
-          //  if (stayCount > 0.25f)
+    }
+
+    public void collectResources(List<Resource> resources)
+    {
+        foreach (Resource myRes in MyResources)
+	    {
+            foreach (Resource otherRes in resources)
             {
-               // Debug.Log("staying");
-            //    stayCount = stayCount - 0.25f;
+                if (myRes.name == otherRes.name)
+                {
+                    myRes.value += otherRes.value;// 1;
+                    otherRes.value = 0;
+                }
             }
-           // else
+	    }
+    }
+
+    public void depositResources(List<Resource> resources)
+    {
+        foreach (Resource myRes in MyResources)
+        {
+            foreach (Resource otherRes in resources)
             {
-              //  stayCount = stayCount + Time.deltaTime;
+                if (myRes.name == otherRes.name)
+                {
+                    otherRes.value += myRes.value;// 1;
+                    myRes.value = 0;
+                }
             }
         }
     }

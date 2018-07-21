@@ -5,7 +5,7 @@ using UnityEngine;
 public class Resource : MonoBehaviour {
 
     public string name { get; private set; }
-    public int value { get; private set; }
+    public int value { get; set; }
 
     public Resource(string name, int value = 0)
     {
