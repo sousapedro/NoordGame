@@ -20,14 +20,14 @@ public class DepositBuilding : Building
     public new void FixedUpdate()
     {
         UpdateGalpão();
-		if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
-        {
-            foreach (Resource res in ResourceList)
-            {
-                print(res.name + ":" + res.value);
-            }
+		//if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
+        //{
+        //    foreach (Resource res in ResourceList)
+        //    {
+        //        print(res.name + ":" + res.value);
+        //    }
 
-        }
+        //}
     }
 
 	override public void Interact(Player player)
@@ -48,9 +48,16 @@ public class DepositBuilding : Building
             GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
+	public override void WhileInteracting(Player player)
+	{
+		
+	}
+	public override void EndInteraction(Player player)
+	{
+	}
 
 
-    void UpdateGalpão()
+	void UpdateGalpão()
     {
         if (State == BuildingState.Loading && Time.time > nextCollect)
         {

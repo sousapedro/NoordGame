@@ -69,11 +69,16 @@ public class Player : MonoBehaviour {
     {
         if (Input.GetKeyDown("space"))
         {
-            print("space key was pressed");
             Building building = other.GetComponent<Building>();
 			building.Interact(this);
            // GameObject GO = other.gameobject;
-        }
+		} else if (Input.GetKey("space")) {
+            Building building = other.GetComponent<Building>();
+			building.WhileInteracting(this);
+		} else {
+            Building building = other.GetComponent<Building>();
+            building.EndInteraction(this);
+		}
     }
 
     public void collectResources(List<Resource> resources)

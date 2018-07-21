@@ -43,6 +43,13 @@ public class ResourceBuilding : Building
             GetComponent<SpriteRenderer>().color = Color.red;
         }
 	}
+    public override void WhileInteracting(Player player)
+    {
+
+	}
+    public override void EndInteraction(Player player)
+    {
+    }
 
     void UpdateGatherings()
     {

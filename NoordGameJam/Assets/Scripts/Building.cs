@@ -12,7 +12,8 @@ public abstract class Building : MonoBehaviour {
         Ouro,
         Armas,
         Tecnologia,
-        Galpão
+        Galpão,
+        Research
     }
 
     public enum BuildingState
@@ -35,22 +36,21 @@ public abstract class Building : MonoBehaviour {
     public float attackRate = 0.5F;
     public float nextAttack = 0.0F;
 
+	public float currentCollect = 0.0f;
+	public float startCollect = 0.0f;
+	public bool interacting = false;
+    
 	// Use this for initialization
 	public void Start () {
 	}
 	
 	// Update is called once per frame
 	public void FixedUpdate () {      
-        //if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
-        //{
-        //    foreach (Resource res in ResourceList)
-        //    {
-        //        print(res.name + ":" + res.value);
-        //    }
-
-        //}
+        
 	}
 
 	abstract public void Interact(Player player);
+	abstract public void WhileInteracting(Player player);
+	abstract public void EndInteraction(Player player);
    
 }
