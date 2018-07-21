@@ -17,6 +17,8 @@ public class DepositBuilding : Building
     public Text ResourceAmount2;
     public Text ResourceAmount3;
 
+    public ResearchBuilding researchBuilding;
+
     // Use this for initialization
     public new void Start()
     {
@@ -57,12 +59,13 @@ public class DepositBuilding : Building
     public new void FixedUpdate()
     {
         UpdateGalpão();
-		//if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
+        //if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
         //{
-        //    foreach (Resource res in ResourceList)
-        //    {
-        //        print(res.name + ":" + res.value);
-        //    }
+        //    //foreach (Resource res in ResourceList)
+        //    //{
+        //    //    print(res.name + ":" + res.value);
+        //    //}
+        //    printf(research.ResourceList);
 
         //}
     }
@@ -126,14 +129,16 @@ public class DepositBuilding : Building
 
     public void ShipInteract(Ship ship)
     {
-        if (State == BuildingState.Idle)
+        //if (State == BuildingState.Idle)
+        if (State != BuildingState.UnderAttack)
         {
             State = BuildingState.Loading;
             nextCollect = Time.time + collectRate;
-            ship.depositResources(ResourceList);
-            //ship.debugResources();
+            ship.debugResources();
+            ship.depositResources(researchBuilding);
+            ship.debugResources();
             ship.collectResources(this);
-            //ship.debugResources();
+            ship.debugResources();
             ship.startWaiting();
 
             GetComponent<SpriteRenderer>().color = Color.blue;
