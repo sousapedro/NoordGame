@@ -31,6 +31,7 @@ public class Ship : MonoBehaviour {
 	private ShipState lastState = ShipState.Idle;
 	private bool needsInteraction = false;
 	private Building lastBuilding = null;
+    string pathStr = "";
 
     // Use this for initialization
     void Awake()
@@ -53,6 +54,10 @@ public class Ship : MonoBehaviour {
     void FixedUpdate()
     {
         float step = Speed * Time.deltaTime;
+        //if (Path == WayToGo.Colonia && pathStr != "ColonyDepot")
+        //    pathStr = "ColonyDepot";
+        //else if (Path == WayToGo.Colonia && (pathStr != "MetropolyDepot" &&)
+        //    pathStr = "MetropolyDepot";
         string pathStr = Path == WayToGo.Colonia ? "ColonyDepot" : "MetropolyDepot";
         
         // Move our position a step closer to the target.
