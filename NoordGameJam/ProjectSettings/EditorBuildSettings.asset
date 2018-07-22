@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Ludieke/Ludieke.unity
+    guid: 72de0913126e5914287928280f2d219c
+  - enabled: 1
+    path: Assets/Menu/Menu.unity
+    guid: 8a08eda2628e4374ba527d124eacceca
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

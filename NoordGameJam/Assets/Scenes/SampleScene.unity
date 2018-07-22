@@ -850,7 +850,7 @@ MonoBehaviour:
   attackCurrentTime: 0
   attackSaveTime: 3
   AttackIcon: {fileID: 0}
-  myAudioClip: {fileID: 8300000, guid: b895957d8116bf04498240b0e847d73b, type: 3}
+  myAudioClip: {fileID: 8300000, guid: 19104c33d8c55f543822d7d0b3ce6b7c, type: 3}
   myAudioSource: {fileID: 197824341}
   myAtkAudioClip: {fileID: 0}
   timeBarResources: {fileID: 1817491993}
@@ -1130,7 +1130,7 @@ MonoBehaviour:
   Speed: 2.5
   playerId: 2
   Type: 1
-  myAudioClip: {fileID: 8300000, guid: fa4b8da9f2709cd4aa0bd90ed9adbf2d, type: 3}
+  myAudioClip: {fileID: 8300000, guid: 69634ea349589cb46aa329c7f69f4a92, type: 3}
   myAudioSource: {fileID: 207142025}
   SpriteRes1: {fileID: 578594851}
   SpriteRes2: {fileID: 972679440}
@@ -2712,7 +2712,7 @@ MonoBehaviour:
   Speed: 2.5
   playerId: 1
   Type: 0
-  myAudioClip: {fileID: 8300000, guid: 8fe575706f1b1104dbfb574f56e0fc3d, type: 3}
+  myAudioClip: {fileID: 8300000, guid: f807b36075a062c43b9d5fcbd170957c, type: 3}
   myAudioSource: {fileID: 492447251}
   SpriteRes1: {fileID: 617669107}
   SpriteRes2: {fileID: 707680915}
@@ -7413,7 +7413,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0
