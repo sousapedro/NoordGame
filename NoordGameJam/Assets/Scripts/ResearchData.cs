@@ -13,13 +13,20 @@ public class ResearchData
 		colonyResearchs = new List<Research>();
 		metropolyResearchs = new List<Research>();
 		//wood  |   documents   |   sugar
-		colonyResearchs.Add(Research.NewColonyResearch(5, 5, 5));
-		colonyResearchs.Add(Research.NewColonyResearch(8, 8, 5));
-		colonyResearchs.Add(Research.NewColonyResearch(10, 10, 10));
-		colonyResearchs.Add(Research.NewColonyResearch(12, 12, 12));
-		colonyResearchs.Add(Research.NewColonyResearch(15, 15, 15));
-		colonyResearchs.Add(Research.NewColonyResearch(20, 20, 20));
-		colonyResearchs.Add(Research.NewColonyResearch(25, 25, 25));
+		//colonyResearchs.Add(Research.NewColonyResearch(5, 5, 5));
+		//colonyResearchs.Add(Research.NewColonyResearch(8, 8, 5));
+		//colonyResearchs.Add(Research.NewColonyResearch(10, 10, 10));
+		//colonyResearchs.Add(Research.NewColonyResearch(12, 12, 12));
+		//colonyResearchs.Add(Research.NewColonyResearch(15, 15, 15));
+		//colonyResearchs.Add(Research.NewColonyResearch(20, 20, 20));
+		//colonyResearchs.Add(Research.NewColonyResearch(25, 25, 25));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
 
         //gold   |   Guns    |    Tecnology
 		metropolyResearchs.Add(Research.NewMetropolyResearch(5, 5, 5));
@@ -49,4 +56,7 @@ public class ResearchData
 		metropolyIndex++;
         return research;
     }
+	public int getSize() {
+		return colonyResearchs.Count + metropolyResearchs.Count;
+	}
 }
