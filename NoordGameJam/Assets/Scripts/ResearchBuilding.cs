@@ -20,6 +20,8 @@ public class ResearchBuilding : Building
     public Text CurQuestRes2;
     public Text CurQuestRes3;
 
+    public TimeBar curTimeBar;
+
 	public Research research;
 	public delegate void ResearchCompleted();
 	private ResearchCompleted onResearchCompleted;
@@ -93,6 +95,8 @@ public class ResearchBuilding : Building
         CurQuestRes1.text = "x" + research.ResourceList[0].value;
         CurQuestRes2.text = "x" + research.ResourceList[1].value;
         CurQuestRes3.text = "x" + research.ResourceList[2].value;
+
+        curTimeBar.Restart();
 
 		Reset();
 	}

@@ -48,7 +48,7 @@ public class Ship : MonoBehaviour {
     void FixedUpdate()
     {
         float step = Speed * Time.deltaTime;
-        string pathStr = Path == WayToGo.Colonia ? "GalpãoColonia" : "GalpãoMetropole";
+        string pathStr = Path == WayToGo.Colonia ? "ColonyDepot" : "MetropolyDepot";
         
         // Move our position a step closer to the target.
         if (State == ShipState.Travelling)

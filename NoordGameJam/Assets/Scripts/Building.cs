@@ -31,10 +31,10 @@ public abstract class Building : MonoBehaviour {
     public BuildingState State = BuildingState.Idle;
 
     public float collectRate = 0.5F;
-    public float nextCollect = 0.0F;
+    protected float nextCollect = 0.0F;
 
     public float attackRate = 0.5F;
-    public float nextAttack = 0.0F;
+    protected float nextAttack = 0.0F;
 
 	public float currentCollect = 0.0f;
 	public float startCollect = 0.0f;
