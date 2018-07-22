@@ -139,8 +139,10 @@ public abstract class Building : MonoBehaviour {
             tempColor.a = 0f;
             AttackIcon.color = tempColor;
         }
-        else
-            print("QQ HOUVE??");
+		else {
+			//print("QQ HOUVE??");
+            
+        }
     }
-
+    
 }

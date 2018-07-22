@@ -12,11 +12,17 @@ public class Player : MonoBehaviour {
     public float Speed = 5f;
     public int playerId = 1;
     public PlayerType Type;
+	public Animator animator;
     private Rigidbody rb;
 
     private string HorizontalAxis = "Horizontal";
     private string VerticalAxis = "Vertical";
     private string ActionBtn;
+
+	private bool isFlipping = false;
+	private bool isLeft = true;
+	private float animationDuration = 0.3f;
+	private float currentAnimation = 0;
 
     public List<Resource> MyResources;
 	// Use this for initialization
@@ -61,17 +67,15 @@ public class Player : MonoBehaviour {
 
         rb.velocity  = movement * Speed;
 
+		if(isLeft && moveHorizontal > 0) {
+			isLeft = false;
+			animator.SetTrigger("flip");
+		} else if(!isLeft && moveHorizontal < 0) {
+			animator.SetTrigger("flip");
+			isLeft = true;
+		}
 
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    foreach (Resource res in MyResources)
-        //    {
-        //        print(res.name + ":" + res.value);
-        //    }
-            
-        //}
     }
-
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(ActionBtn))
