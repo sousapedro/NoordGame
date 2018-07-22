@@ -14,7 +14,6 @@ public class TimeBarAttack : MonoBehaviour {
 	public void Start()
 	{
 		MaxAmount = healthBar.sizeDelta.x;
-		print(MaxAmount);
 		healthBar.sizeDelta = new Vector2(0, healthBar.sizeDelta.y);
 	}
  
@@ -26,7 +25,6 @@ public class TimeBarAttack : MonoBehaviour {
 
         var percent = ActiveTime / MaxTime;
         float curAmount = Mathf.Lerp(0, 1, percent);
-		print(percent);
 
 
         healthBar.sizeDelta = new Vector2(curAmount * MaxAmount, healthBar.sizeDelta.y);

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ResourceBuilding : Building
 {
     public TimeBarResources timeBarResources;
-    public Image ReadyIcon;
+	public GameObject readyIcon;
 
 	private float iconTimeAnimation = 3f;
 	private Vector3 iconTargetLocation;
@@ -17,7 +17,6 @@ public class ResourceBuilding : Building
     public new void Start()
     {
 		base.Start();
-        iconTargetLocation = new Vector3(ReadyIcon.transform.position.x, ReadyIcon.transform.position.y + yOffset, ReadyIcon.transform.position.z);
 		ResourceList.Add(new Resource(Type.ToString()));
 
         if (timeBarResources != null)
@@ -31,7 +30,7 @@ public class ResourceBuilding : Building
     public new void FixedUpdate()
     {
         UpdateGatherings();
-		UpdateIcon();
+		UpdateIcons();
     }
 
 	override public void Interact(Player player) {
@@ -51,7 +50,9 @@ public class ResourceBuilding : Building
 	void ChangeState(Player player) {
 		if(State == BuildingState.UnderAttack || State == BuildingState.SavingFromAttack) {
             timeBarResources.gameObject.SetActive(false);
-			UpdateAttackState();
+            UpdateAttackState();
+			print("to hide?");
+			HideReadyIcon();
 		}
 		else {
 			if(interacting) {
@@ -99,47 +100,26 @@ public class ResourceBuilding : Building
         }
     }
 
-    public void ShowReadyIcon()
+    private void ShowReadyIcon()
     {
 		if(!isUnderAttack) {
-			if (ReadyIcon != null)
+			if (readyIcon != null)
 			{
-				print(iconTimeAnimation);
-				var tempColor = ReadyIcon.color;
-				tempColor.a = 1f;
-				ReadyIcon.color = tempColor;
-				showIcon = true;
+				readyIcon.SetActive(true);
 			}
         }
 
     }
 
-    public void HideReadyIcon()
+    private void HideReadyIcon()
     {
-        if (ReadyIcon != null)
-        {
-            var tempColor = ReadyIcon.color;
-            tempColor.a = 0f;
-            ReadyIcon.color = tempColor;
-			showIcon = false;
-        }
+		readyIcon.SetActive(false);
     }
 
-    public void UpdateIcon()
-	{
-		if(showIcon && !isUnderAttack) {
-			float difference = Mathf.Abs(ReadyIcon.transform.position.y * .0001f);
-			if (Mathf.Abs(ReadyIcon.transform.position.y - iconTargetLocation.y) <= difference) {
-				yOffset *= -1;
-				iconTargetLocation = new Vector3(ReadyIcon.transform.position.x, ReadyIcon.transform.position.y+yOffset, ReadyIcon.transform.position.z);
-				currentTime = 0;
-			}
-			currentTime += Time.deltaTime;
-			float step = currentTime / iconTimeAnimation;
-			step = 1 + (--step) * step * step * step * step;
-			ReadyIcon.transform.position = Vector3.MoveTowards(ReadyIcon.transform.position, iconTargetLocation, step);
+	private void UpdateIcons() {
+		if(isUnderAttack && readyIcon.activeSelf) {
+			HideReadyIcon();
 		}
-
-    }
+	}
    
 }
