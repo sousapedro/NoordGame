@@ -1,32 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
 	public static GameController instance;
 	public ResearchBuilding colonyResearchBuilding;
 	public ResearchBuilding metropolyResearchBuilding;
+
+	public GameProgressBar progressBar;
+
 	private ResearchData researchData;
 
-	private float ResearchTime = 60;
+	private float ResearchTime = 10;
 
 	private float colonyCurrentTime = 0;
 	private float metropolyCurrentTime = 0;
 
-	[SerializeField]
 	private float colonyCurrentAttackTime = 0;
-	[SerializeField]
 	private float metropolyCurrentAttackTime = 0;
-	[SerializeField]
-	private float ColonyAttackTime = 2;
-	[SerializeField]
-	private float MetropolyAttackTime = 2;
+	public float ColonyAttackTime = 2;
+	public float MetropolyAttackTime = 2;
 	private bool colonyUnderAttack = false;
 	private bool metropolyUnderAttack = false;
 
 	public List<Building> colonyAttackList;
 	public List<Building> metropolyAttackList;
+
+	private int lifeNumber = 3;
+	private int lifesLost = 0;
+	private bool hasEnded = false;
+
+	private int researchGoals = 0;
+	private int researchsCompleted = 0;
     
 	private GameController() {
 		GameController.instance = this;
@@ -38,8 +45,12 @@ public class GameController : MonoBehaviour
 
 		SetColonyResearch(researchData.GetNextColonyResearch());
 		SetMetropolyResearch(researchData.GetNextMetropolyResearch());
+		progressBar.SetStep(researchData.getSize()/2);
+		researchGoals = researchData.getSize() / 2;
     }
-
+	public float GetResearchTime() {
+		return ResearchTime;
+	}
     // Update is called once per frame
     void Update()
     {
@@ -49,11 +60,15 @@ public class GameController : MonoBehaviour
 		UpdateMetropolyAttack();
     }
 	public void OnMetropolyResearchCompleted() {
+		Research research = metropolyResearchBuilding.research;
 		SetMetropolyResearch(researchData.GetNextMetropolyResearch());
+		OnResearchCompleted(research);
 	}
     public void OnColonyResearchCompleted()
     {
+		Research research = colonyResearchBuilding.research;
 		SetColonyResearch(researchData.GetNextColonyResearch());
+		OnResearchCompleted(research);
     }
 	void UpdateColonyTime() {
 		colonyCurrentTime += Time.deltaTime;
@@ -75,7 +90,7 @@ public class GameController : MonoBehaviour
 	void SetColonyResearch(Research research) {
 		colonyCurrentTime = 0;
 		if(research == null) {
-			endGame();
+			endGame(true);
 		} else {
 			colonyResearchBuilding.SetResearch(research, OnColonyResearchCompleted);
         }
@@ -84,7 +99,7 @@ public class GameController : MonoBehaviour
 		metropolyCurrentTime = 0;
 		if (research == null)
 		{
-			endGame();
+			endGame(true);
 		}
 		else
 		{
@@ -92,14 +107,34 @@ public class GameController : MonoBehaviour
 		}
 	}
 	void penality() {
-		
+		progressBar.loseLife();
+		lifesLost++;
+		if(lifesLost >= lifeNumber) {
+			endGame(false);
+		}
 	}
-	void endGame() {
-		
+	void endGame(bool success) {
+		if(hasEnded) {
+			return;
+		}
+        
+		hasEnded = true;
+		if(success) {
+			print("end game");
+			SceneManager.LoadScene("EndGame");
+        } else {
+			print("game over");
+			SceneManager.LoadScene("GameOver");
+		}
+		print("game ended!");
 	}
     public void OnResearchCompleted(Research research)
     {
-
+		progressBar.nextProgressStep();
+		researchsCompleted++;
+		if (researchsCompleted >= researchGoals) {
+			endGame(true);
+		}
     }
 
 	void UpdateColonyAttack() {

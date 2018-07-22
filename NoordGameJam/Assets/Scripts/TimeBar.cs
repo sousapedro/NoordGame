@@ -10,7 +10,12 @@ public class TimeBar : MonoBehaviour {
     public float MaxTime = 60f;
     public float ActiveTime = 0f;
 
-    public void Update()
+	private void Start()
+	{
+		MaxTime = GameController.instance.GetResearchTime();
+	}
+
+	public void Update()
     {
         ActiveTime += Time.deltaTime;
         var percent = ActiveTime / MaxTime;
@@ -22,7 +27,7 @@ public class TimeBar : MonoBehaviour {
     public void Restart()
     {
         MaxAmount = 100;
-        MaxTime = 60f;
+		MaxTime = GameController.instance.GetResearchTime();
         ActiveTime = 0f;
     }
 }

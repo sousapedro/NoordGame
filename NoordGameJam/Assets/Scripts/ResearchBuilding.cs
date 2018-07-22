@@ -120,7 +120,6 @@ public class ResearchBuilding : Building
 	{
         if (State == BuildingState.Idle)
         {
-			print("research  started");
             State = BuildingState.Loading;
 
 			currentCollect += Time.deltaTime;
