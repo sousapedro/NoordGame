@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ResourceBuilding : Building
 {
+    public TimeBarResources timeBarResources;
+    public Image ReadyIcon;
+
     // Use this for initialization
     public new void Start()
     {
+        base.Start();
 		ResourceList.Add(new Resource(Type.ToString()));
+
+        if (timeBarResources != null)
+            timeBarResources.MaxTime = this.collectRate;
+
+        HideReadyIcon();
     }
 
     // Update is called once per frame
@@ -39,8 +49,10 @@ public class ResourceBuilding : Building
 				{
 					State = BuildingState.Generating;
 					currentCollect = 0;
-					
-					GetComponent<SpriteRenderer>().color = Color.blue;
+
+                    if (timeBarResources != null)
+                        timeBarResources.Activate = true;
+					//GetComponent<SpriteRenderer>().color = Color.blue;
 				}
 				else if (State == BuildingState.Ready)
 				{
@@ -50,8 +62,9 @@ public class ResourceBuilding : Building
 						res.modifyResource(1);
 					}
 					player.collectResources(ResourceList);
-					
-					GetComponent<SpriteRenderer>().color = Color.white;
+
+                    HideReadyIcon();
+					//GetComponent<SpriteRenderer>().color = Color.white;
 				}
 			}
         }
@@ -63,12 +76,36 @@ public class ResourceBuilding : Building
 			if (State == BuildingState.Generating && currentCollect > collectRate)
 			{
 				State = BuildingState.Ready;
-				GetComponent<SpriteRenderer>().color = Color.green;
+
+                ShowReadyIcon();
+				//GetComponent<SpriteRenderer>().color = Color.green;
 			} else if (State == BuildingState.Generating){
 				currentCollect += Time.deltaTime;
 			}
         }
     }
+
+    public void ShowReadyIcon()
+    {
+        if (ReadyIcon != null)
+        {
+            var tempColor = ReadyIcon.color;
+            tempColor.a = 1f;
+            ReadyIcon.color = tempColor;
+        }
+    }
+
+    public void HideReadyIcon()
+    {
+        if (ReadyIcon != null)
+        {
+            var tempColor = ReadyIcon.color;
+            tempColor.a = 0f;
+            ReadyIcon.color = tempColor;
+        }
+    }
+
+
 
    
 }

@@ -12,13 +12,12 @@ public class ResearchBuilding : Building
     }
 
     public LandType landType;
-    public Text ResourceAmount1;
-    public Text ResourceAmount2;
-    public Text ResourceAmount3;
 
     public Text CurQuestRes1;
     public Text CurQuestRes2;
     public Text CurQuestRes3;
+
+    public int[] curQuest = {0,0,0};
 
     public TimeBar curTimeBar;
 
@@ -81,18 +80,16 @@ public class ResearchBuilding : Building
 		onResearchCompleted = callback;
 		this.research = research;
 
-        CurQuestRes1.text = "x" + research.ResourceList[0].value;
-        CurQuestRes2.text = "x" + research.ResourceList[1].value;
-        CurQuestRes3.text = "x" + research.ResourceList[2].value;
+        for (int i = 0; i < 3; i++)
+        {
+            curQuest[i] =  research.ResourceList[i].value;
+        }
 
         curTimeBar.Restart();
 
 		Reset();
 	}
-    //public void SetCurrentQuestDisplay(Research research)
-    //{
 
-    //}
 	override public void Interact(Player player)
     {
 		interacting = true;
@@ -187,16 +184,16 @@ public class ResearchBuilding : Building
 
     public void changeResource1(Resource res)
     {
-        ResourceAmount1.text = "x" + res.value;
+        CurQuestRes1.text = res.value + "/" + curQuest[0];
     }
 
     public void changeResource2(Resource res)
     {
-        ResourceAmount2.text = "x" + res.value;
+        CurQuestRes2.text = res.value + "/" + curQuest[1];
     }
 
     public void changeResource3(Resource res)
     {
-        ResourceAmount3.text = "x" + res.value;
+        CurQuestRes3.text = res.value + "/" + curQuest[2];
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public abstract class Building : MonoBehaviour {
 
@@ -46,6 +47,8 @@ public abstract class Building : MonoBehaviour {
 	public delegate void AttackFinished();
 	public AttackFinished onAttackFinished;
 
+    public Image AttackIcon;
+
 	public Action<bool> attackFinishedCallbacks;
 
 	public bool isUnderAttack
@@ -62,6 +65,7 @@ public abstract class Building : MonoBehaviour {
     
 	// Use this for initialization
 	public void Start () {
+        HideAttackIcon();
 	}
 	
 	// Update is called once per frame
@@ -75,7 +79,8 @@ public abstract class Building : MonoBehaviour {
 
 	public void SetUnderAttack(AttackFinished attackFinished) {
 		State = BuildingState.UnderAttack;
-		GetComponent<SpriteRenderer>().color = Color.red;
+        ShowAttackIcon();
+		//GetComponent<SpriteRenderer>().color = Color.red;
 		attackCurrentTime = 0;
 		onAttackFinished = attackFinished;
 	}
@@ -94,12 +99,14 @@ public abstract class Building : MonoBehaviour {
 			}
 		} else if(State == BuildingState.SavingFromAttack) {
 			State = BuildingState.UnderAttack;
+            ShowAttackIcon();
 			GetComponent<SpriteRenderer>().color = Color.red;
 		}
     }
 	public void TryRemoveAttack() {
 		if(attackCurrentTime >= attackSaveTime) {
             State = BuildingState.Idle;
+            HideAttackIcon();
 			GetComponent<SpriteRenderer>().color = Color.white;
 			onAttackFinished();
 			if(attackFinishedCallbacks != null) {
@@ -113,5 +120,27 @@ public abstract class Building : MonoBehaviour {
 	public void RemoveOnAttackFinished(Action<bool> action) {
 		attackFinishedCallbacks -= action;
 	}
+
+    public void ShowAttackIcon()
+    {
+        if (AttackIcon != null)
+        {
+            var tempColor = AttackIcon.color;
+            tempColor.a = 1f;
+            AttackIcon.color = tempColor;
+        }
+    }
+
+    public void HideAttackIcon()
+    {
+        if (AttackIcon != null)
+        {
+            var tempColor = AttackIcon.color;
+            tempColor.a = 0f;
+            AttackIcon.color = tempColor;
+        }
+        else
+            print("QQ HOUVE??");
+    }
 
 }

@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\ResourceBuilding.cs" />
      <Compile Include="Assets\Scripts\Ship.cs" />
      <Compile Include="Assets\Scripts\TimeBar.cs" />
+     <Compile Include="Assets\Scripts\TimeBarResources.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Pedro Sousa/Documents/NoordGameJam/NoordGameJam/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
