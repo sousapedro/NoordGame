@@ -48,6 +48,7 @@ public abstract class Building : MonoBehaviour {
 	public AttackFinished onAttackFinished;
 
     public Image AttackIcon;
+	public TimeBarAttack attackBar;
 
 	public Action<bool> attackFinishedCallbacks;
 
@@ -66,6 +67,7 @@ public abstract class Building : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
         HideAttackIcon();
+		hideAttackBar();
 	}
 	
 	// Update is called once per frame
@@ -90,11 +92,15 @@ public abstract class Building : MonoBehaviour {
 			if (State == BuildingState.UnderAttack)
 			{
 				State = BuildingState.SavingFromAttack;
+				attackBar.SetTimerBarAttack(attackSaveTime);
+				showAttackBar();
 				attackCurrentTime += Time.deltaTime;
 				GetComponent<SpriteRenderer>().color = Color.grey;
+				attackBar.UpdateBar();
 				TryRemoveAttack();
 			} else if (State == BuildingState.SavingFromAttack) {
                 attackCurrentTime += Time.deltaTime;
+				attackBar.UpdateBar();
 				TryRemoveAttack();
 			}
 		} else if(State == BuildingState.SavingFromAttack) {
@@ -109,8 +115,9 @@ public abstract class Building : MonoBehaviour {
             HideAttackIcon();
 			GetComponent<SpriteRenderer>().color = Color.white;
 			onAttackFinished();
-			if(attackFinishedCallbacks != null) {
-				attackFinishedCallbacks(true);
+			hideAttackBar();
+            if(attackFinishedCallbacks != null) {
+                attackFinishedCallbacks(true);
 			}
 		}
 	}
@@ -145,4 +152,17 @@ public abstract class Building : MonoBehaviour {
         }
     }
     
+	public void hideAttackBar() {
+		if(attackBar != null) {
+			print("hiding bar");
+			attackBar.gameObject.SetActive(false);
+			attackBar.Restart();
+        }
+	}
+	public void showAttackBar() {
+		if(attackBar != null) {
+			print("showing bar");
+			attackBar.gameObject.SetActive(true);
+        }
+	}
 }
