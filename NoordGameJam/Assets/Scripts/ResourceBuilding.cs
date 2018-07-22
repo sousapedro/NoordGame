@@ -101,14 +101,17 @@ public class ResourceBuilding : Building
 
     public void ShowReadyIcon()
     {
-        if (ReadyIcon != null)
-        {
-			print(iconTimeAnimation);
-            var tempColor = ReadyIcon.color;
-            tempColor.a = 1f;
-            ReadyIcon.color = tempColor;
-			showIcon = true;
+		if(!isUnderAttack) {
+			if (ReadyIcon != null)
+			{
+				print(iconTimeAnimation);
+				var tempColor = ReadyIcon.color;
+				tempColor.a = 1f;
+				ReadyIcon.color = tempColor;
+				showIcon = true;
+			}
         }
+
     }
 
     public void HideReadyIcon()
@@ -124,7 +127,7 @@ public class ResourceBuilding : Building
 
     public void UpdateIcon()
 	{
-		if(showIcon) {
+		if(showIcon && !isUnderAttack) {
 			float difference = Mathf.Abs(ReadyIcon.transform.position.y * .0001f);
 			if (Mathf.Abs(ReadyIcon.transform.position.y - iconTargetLocation.y) <= difference) {
 				yOffset *= -1;
@@ -135,7 +138,7 @@ public class ResourceBuilding : Building
 			float step = currentTime / iconTimeAnimation;
 			step = 1 + (--step) * step * step * step * step;
 			ReadyIcon.transform.position = Vector3.MoveTowards(ReadyIcon.transform.position, iconTargetLocation, step);
-        }
+		}
 
     }
    

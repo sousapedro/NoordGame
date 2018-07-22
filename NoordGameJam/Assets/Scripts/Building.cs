@@ -50,6 +50,8 @@ public abstract class Building : MonoBehaviour {
     public Image AttackIcon;
 	public TimeBarAttack attackBar;
 
+	private BuildingState lastState;
+
 	public Action<bool> attackFinishedCallbacks;
 
 	public bool isUnderAttack
@@ -80,6 +82,7 @@ public abstract class Building : MonoBehaviour {
 	abstract public void EndInteraction(Player player);
 
 	public void SetUnderAttack(AttackFinished attackFinished) {
+		lastState = State;
 		State = BuildingState.UnderAttack;
         ShowAttackIcon();
 		//GetComponent<SpriteRenderer>().color = Color.red;
@@ -111,7 +114,7 @@ public abstract class Building : MonoBehaviour {
     }
 	public void TryRemoveAttack() {
 		if(attackCurrentTime >= attackSaveTime) {
-            State = BuildingState.Idle;
+			State = lastState;
             HideAttackIcon();
 			GetComponent<SpriteRenderer>().color = Color.white;
 			onAttackFinished();
