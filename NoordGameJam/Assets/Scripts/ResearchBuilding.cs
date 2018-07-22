@@ -32,7 +32,7 @@ public class ResearchBuilding : Building
 		//Research research = new Research(list);
 		//SetResearch(research);
 
-
+        
         print("adding resources");
         foreach (Resource myRes in ResourceList)
         {
@@ -48,7 +48,6 @@ public class ResearchBuilding : Building
 	// Update is called once per frame
 	public new void FixedUpdate()
     {
-		ChangeState();
     }
 	public void SetResearch(Research research, ResearchCompleted callback) {
 		onResearchCompleted = callback;
@@ -58,13 +57,15 @@ public class ResearchBuilding : Building
 	override public void Interact(Player player)
     {
 		interacting = true;
+        ChangeState();
 	}
     public override void WhileInteracting(Player player)
     {
-		
+        ChangeState();
     }   
 	public override void EndInteraction(Player player) {
 		interacting = false;
+        ChangeState();
 	}
     
 	void ChangeState() {
@@ -98,7 +99,7 @@ public class ResearchBuilding : Building
 	void StopResearch() {
         if (State == BuildingState.Loading)
         {
-			print("research  stoped");
+			print("research stoped");
 			State = BuildingState.Idle;
 			GetComponent<SpriteRenderer>().color = Color.white;
         }
@@ -107,7 +108,7 @@ public class ResearchBuilding : Building
 	void EndResearch() {
 		State = BuildingState.Ready;
 		GetComponent<SpriteRenderer>().color = Color.white;
-		print("research  ended");
+		print("research ended");
 		onResearchCompleted();
 	}
 
