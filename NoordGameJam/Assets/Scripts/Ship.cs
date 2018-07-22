@@ -33,9 +33,10 @@ public class Ship : MonoBehaviour {
 	private Building lastBuilding = null;
     string pathStr = "";
 
-
     public AudioClip myAudioClip;
     public AudioSource myAudioSource;
+
+	public Animator animator;
 
     // Use this for initialization
     void Awake()
@@ -50,6 +51,7 @@ public class Ship : MonoBehaviour {
         MyResources.Add(new Resource("Tecnologia"));
 
         myAudioSource.clip = myAudioClip;
+        animator.SetTrigger("flip");
     }
 
     // Update is called once per frame
@@ -85,7 +87,7 @@ public class Ship : MonoBehaviour {
                     Path = WayToGo.Colonia;
                 
                 State = ShipState.Travelling;
-                //myAudioSource.Play();
+				animator.SetTrigger("flip");
 			}
 		} else if(State == ShipState.OnAttack) {
 			//do nothing?

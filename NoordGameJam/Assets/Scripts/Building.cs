@@ -47,7 +47,10 @@ public abstract class Building : MonoBehaviour {
 	public delegate void AttackFinished();
 	public AttackFinished onAttackFinished;
 
-    public Image AttackIcon;
+	public GameObject attackIcon;
+	public TimeBarAttack attackBar;
+
+	private BuildingState lastState;
 
     public AudioClip myAudioClip;
     public AudioSource myAudioSource;
@@ -70,6 +73,8 @@ public abstract class Building : MonoBehaviour {
 	// Use this for initialization
 	public void Start () {
         HideAttackIcon();
+		hideAttackBar();
+
 	}
 	
 	// Update is called once per frame
@@ -82,6 +87,7 @@ public abstract class Building : MonoBehaviour {
 	abstract public void EndInteraction(Player player);
 
 	public void SetUnderAttack(AttackFinished attackFinished) {
+		lastState = State;
 		State = BuildingState.UnderAttack;
         ShowAttackIcon();
         if (myAudioSource != null)
@@ -99,32 +105,29 @@ public abstract class Building : MonoBehaviour {
 			if (State == BuildingState.UnderAttack)
 			{
 				State = BuildingState.SavingFromAttack;
+				attackBar.SetTimerBarAttack(attackSaveTime);
+				showAttackBar();
 				attackCurrentTime += Time.deltaTime;
-				GetComponent<SpriteRenderer>().color = Color.grey;
+				attackBar.UpdateBar();
 				TryRemoveAttack();
 			} else if (State == BuildingState.SavingFromAttack) {
                 attackCurrentTime += Time.deltaTime;
+				attackBar.UpdateBar();
 				TryRemoveAttack();
 			}
 		} else if(State == BuildingState.SavingFromAttack) {
 			State = BuildingState.UnderAttack;
             ShowAttackIcon();
-            //if (myAudioSource != null)
-            //{
-            //    myAudioSource.clip = myAtkAudioClip;
-            //    myAudioSource.Play();
-            //}
-			//GetComponent<SpriteRenderer>().color = Color.red;
 		}
     }
 	public void TryRemoveAttack() {
 		if(attackCurrentTime >= attackSaveTime) {
-            State = BuildingState.Idle;
+			State = lastState;
             HideAttackIcon();
-			GetComponent<SpriteRenderer>().color = Color.white;
 			onAttackFinished();
-			if(attackFinishedCallbacks != null) {
-				attackFinishedCallbacks(true);
+			hideAttackBar();
+            if(attackFinishedCallbacks != null) {
+                attackFinishedCallbacks(true);
 			}
 		}
 	}
@@ -137,24 +140,33 @@ public abstract class Building : MonoBehaviour {
 
     public void ShowAttackIcon()
     {
-        if (AttackIcon != null)
+        if (attackIcon != null)
         {
-            var tempColor = AttackIcon.color;
-            tempColor.a = 1f;
-            AttackIcon.color = tempColor;
+			attackIcon.gameObject.SetActive(true);
         }
     }
 
     public void HideAttackIcon()
     {
-        if (AttackIcon != null)
+        if (attackIcon != null)
         {
-            var tempColor = AttackIcon.color;
-            tempColor.a = 0f;
-            AttackIcon.color = tempColor;
+			attackIcon.gameObject.SetActive(false);
         }
-        else
-            print("QQ HOUVE??");
+		else {
+			//print("QQ HOUVE??");
+            
+        }
     }
-
+    
+	public void hideAttackBar() {
+		if(attackBar != null) {
+			attackBar.gameObject.SetActive(false);
+			attackBar.Restart();
+        }
+	}
+	public void showAttackBar() {
+		if(attackBar != null) {
+			attackBar.gameObject.SetActive(true);
+        }
+	}
 }

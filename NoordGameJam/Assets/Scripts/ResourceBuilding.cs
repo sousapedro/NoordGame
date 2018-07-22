@@ -5,24 +5,32 @@ using UnityEngine.UI;
 public class ResourceBuilding : Building
 {
     public TimeBarResources timeBarResources;
-    public Image ReadyIcon;
+	public GameObject readyIcon;
+
+	private float iconTimeAnimation = 3f;
+	private Vector3 iconTargetLocation;
+	private float yOffset = 10f;
+	private bool showIcon = false;
+	private float currentTime = 0;
 
     // Use this for initialization
     public new void Start()
     {
-        base.Start();
+		base.Start();
 		ResourceList.Add(new Resource(Type.ToString()));
 
         if (timeBarResources != null)
             timeBarResources.MaxTime = this.collectRate;
 
-        HideReadyIcon();
+		HideReadyIcon();
+        timeBarResources.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     public new void FixedUpdate()
     {
         UpdateGatherings();
+		UpdateIcons();
     }
 
 	override public void Interact(Player player) {
@@ -41,7 +49,10 @@ public class ResourceBuilding : Building
     
 	void ChangeState(Player player) {
 		if(State == BuildingState.UnderAttack || State == BuildingState.SavingFromAttack) {
-			UpdateAttackState();
+            timeBarResources.gameObject.SetActive(false);
+            UpdateAttackState();
+			print("to hide?");
+			HideReadyIcon();
 		}
 		else {
 			if(interacting) {
@@ -50,8 +61,10 @@ public class ResourceBuilding : Building
 					State = BuildingState.Generating;
 					currentCollect = 0;
 
-                    if (timeBarResources != null)
-                        timeBarResources.Activate = true;
+					if (timeBarResources != null) {
+						timeBarResources.gameObject.SetActive(true);
+						timeBarResources.Activate = true;
+                    }
 					//GetComponent<SpriteRenderer>().color = Color.blue;
 				}
 				else if (State == BuildingState.Ready)
@@ -69,6 +82,7 @@ public class ResourceBuilding : Building
 					player.collectResources(ResourceList);
 
                     HideReadyIcon();
+					timeBarResources.gameObject.SetActive(false);
 					//GetComponent<SpriteRenderer>().color = Color.white;
 				}
 			}
@@ -81,6 +95,7 @@ public class ResourceBuilding : Building
 			if (State == BuildingState.Generating && currentCollect > collectRate)
 			{
 				State = BuildingState.Ready;
+                timeBarResources.gameObject.SetActive(false);
 
                 ShowReadyIcon();
 				//GetComponent<SpriteRenderer>().color = Color.green;
@@ -90,27 +105,26 @@ public class ResourceBuilding : Building
         }
     }
 
-    public void ShowReadyIcon()
+    private void ShowReadyIcon()
     {
-        if (ReadyIcon != null)
-        {
-            var tempColor = ReadyIcon.color;
-            tempColor.a = 1f;
-            ReadyIcon.color = tempColor;
+		if(!isUnderAttack) {
+			if (readyIcon != null)
+			{
+				readyIcon.SetActive(true);
+			}
         }
+
     }
 
-    public void HideReadyIcon()
+    private void HideReadyIcon()
     {
-        if (ReadyIcon != null)
-        {
-            var tempColor = ReadyIcon.color;
-            tempColor.a = 0f;
-            ReadyIcon.color = tempColor;
-        }
+		readyIcon.SetActive(false);
     }
 
-
-
+	private void UpdateIcons() {
+		if(isUnderAttack && readyIcon.activeSelf) {
+			HideReadyIcon();
+		}
+	}
    
 }

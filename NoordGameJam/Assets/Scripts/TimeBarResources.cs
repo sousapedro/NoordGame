@@ -11,6 +11,12 @@ public class TimeBarResources : MonoBehaviour {
     public float ActiveTime = 0f;
     public bool Activate = false;
 
+    public void Start()
+    {
+		MaxAmount = healthBar.sizeDelta.x;
+        healthBar.sizeDelta = new Vector2(0, healthBar.sizeDelta.y);
+    }
+
     public void Update()
     {
         if (Activate)
