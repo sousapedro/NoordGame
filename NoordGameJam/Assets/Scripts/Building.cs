@@ -42,7 +42,7 @@ public abstract class Building : MonoBehaviour {
 	public bool interacting = false;
 
 	public float attackCurrentTime = 0.0f;
-	public float attackSaveTime = 3.0f;
+	public float attackSaveTime = 1.5f;
 	public delegate void AttackFinished();
 	public AttackFinished onAttackFinished;
 

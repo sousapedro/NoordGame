@@ -81,7 +81,9 @@ public class Player : MonoBehaviour {
 				building.Interact(this);
             }
            // GameObject GO = other.gameobject;
-		} else if (Input.GetKey("space")) {
+        }
+        else if (Input.GetKey(ActionBtn))
+        {
             Building building = other.GetComponent<Building>();
 			if (building != null)
 			{

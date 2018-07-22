@@ -8,7 +8,8 @@ public class Research
     {
 		ResourceList = list;
     }
-	public static Research NewColonyResearch(int wood, int doc, int sugar) {
+    public static Research NewMetropolyResearch(int wood, int doc, int sugar)
+    {
         List<Resource> resources = new List<Resource>();
         Resource resource = new Resource("Madeira");
 		resource.modifyResource(wood);
@@ -22,7 +23,7 @@ public class Research
 
 		return new Research(resources);
 	}
-	public static Research NewMetropolyResearch(int gold, int guns, int tec)
+	public static Research NewColonyResearch(int gold, int guns, int tec)
     {
         List<Resource> resources = new List<Resource>();
 		Resource resource = new Resource("Ouro");

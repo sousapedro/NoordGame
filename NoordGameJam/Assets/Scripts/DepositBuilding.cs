@@ -18,6 +18,7 @@ public class DepositBuilding : Building
     public Text ResourceAmount3;
 
 	private bool isLoading = false;
+    public ResearchBuilding researchBuilding;
 
     // Use this for initialization
     public new void Start()
@@ -127,7 +128,7 @@ public class DepositBuilding : Building
     {
         State = BuildingState.Loading;
         nextCollect = Time.time + collectRate;
-        ship.depositResources(ResourceList);
+		ship.depositResources(researchBuilding);
         //ship.debugResources();
         ship.collectResources(this);
         //ship.debugResources();

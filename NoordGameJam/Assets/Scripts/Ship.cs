@@ -128,16 +128,17 @@ public class Ship : MonoBehaviour {
         }
     }
 
-    public void depositResources(List<Resource> resources)
+    public void depositResources(ResearchBuilding researchBuilding)
     {
+        List<Resource> resources = researchBuilding.ResourceList;
         foreach (Resource myRes in MyResources)
         {
             foreach (Resource otherRes in resources)
             {
                 if (myRes.name == otherRes.name)
                 {
-                    //otherRes.value += myRes.value;
-                    myRes.modifyResource(0);
+                    otherRes.modifyResource(myRes.value);
+                    myRes.modifyResource(-myRes.value);
                 }
             }
         }
@@ -151,6 +152,7 @@ public class Ship : MonoBehaviour {
 
     public void debugResources()
     {
+        print("=================");
         foreach (Resource myRes in MyResources)
         {
             print(myRes.name + ":" + myRes.value);

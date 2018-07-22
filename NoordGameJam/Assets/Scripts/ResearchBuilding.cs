@@ -1,9 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ResearchBuilding : Building
 {
+    public enum LandType
+    {
+        Colonia,
+        Metropole
+    }
+
+    public LandType landType;
+    public Text ResourceAmount1;
+    public Text ResourceAmount2;
+    public Text ResourceAmount3;
+
+    public Text CurQuestRes1;
+    public Text CurQuestRes2;
+    public Text CurQuestRes3;
+
 	public Research research;
 	public delegate void ResearchCompleted();
 	private ResearchCompleted onResearchCompleted;
@@ -19,25 +35,34 @@ public class ResearchBuilding : Building
         ResourceList.Add(new Resource("Armas"));
         ResourceList.Add(new Resource("Tecnologia"));
 
-		//List<Resource> list = new List<Resource>();
-		//Resource resource = new Resource("Madeira");
-		//resource.modifyResource(20);
-		//list.Add(resource);
-		//resource = new Resource("Documentação");
-		//resource.modifyResource(20);
-		//list.Add(resource);
-		//resource = new Resource("Açucar");
-		//resource.modifyResource(20);
-		//list.Add(resource);
-		//Research research = new Research(list);
-		//SetResearch(research);
-
-        
-        print("adding resources");
-        foreach (Resource myRes in ResourceList)
+        if (landType == LandType.Metropole)
         {
-			myRes.modifyResource(5);
+            Resource res1 = ResourceList.Find(p => p.name == "Madeira");
+            res1.registerOnUpdateCb(changeResource1);
+
+            Resource res2 = ResourceList.Find(p => p.name == "Documentação");
+            res2.registerOnUpdateCb(changeResource2);
+
+            Resource res3 = ResourceList.Find(p => p.name == "Açucar");
+            res3.registerOnUpdateCb(changeResource3);
         }
+        else
+        {
+            Resource res1 = ResourceList.Find(p => p.name == "Ouro");
+            res1.registerOnUpdateCb(changeResource1);
+
+            Resource res2 = ResourceList.Find(p => p.name == "Armas");
+            res2.registerOnUpdateCb(changeResource2);
+
+            Resource res3 = ResourceList.Find(p => p.name == "Tecnologia");
+            res3.registerOnUpdateCb(changeResource3);
+        }
+
+        //print("adding resources");
+        //foreach (Resource myRes in ResourceList)
+        //{
+        //    myRes.modifyResource(5);
+        //}
     }
 	private void Reset()
 	{
@@ -48,12 +73,22 @@ public class ResearchBuilding : Building
 	// Update is called once per frame
 	public new void FixedUpdate()
     {
+		ChangeState();
     }
 	public void SetResearch(Research research, ResearchCompleted callback) {
 		onResearchCompleted = callback;
 		this.research = research;
+
+        CurQuestRes1.text = "x" + research.ResourceList[0].value;
+        CurQuestRes2.text = "x" + research.ResourceList[1].value;
+        CurQuestRes3.text = "x" + research.ResourceList[2].value;
+
 		Reset();
 	}
+    //public void SetCurrentQuestDisplay(Research research)
+    //{
+
+    //}
 	override public void Interact(Player player)
     {
 		interacting = true;
@@ -108,7 +143,7 @@ public class ResearchBuilding : Building
 	void EndResearch() {
 		State = BuildingState.Ready;
 		GetComponent<SpriteRenderer>().color = Color.white;
-		print("research ended");
+        RemoveResources();
 		onResearchCompleted();
 	}
 
@@ -145,4 +180,19 @@ public class ResearchBuilding : Building
             }
         }
 	}
+
+    public void changeResource1(Resource res)
+    {
+        ResourceAmount1.text = "x" + res.value;
+    }
+
+    public void changeResource2(Resource res)
+    {
+        ResourceAmount2.text = "x" + res.value;
+    }
+
+    public void changeResource3(Resource res)
+    {
+        ResourceAmount3.text = "x" + res.value;
+    }
 }
