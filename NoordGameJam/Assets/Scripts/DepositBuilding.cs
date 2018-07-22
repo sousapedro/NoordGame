@@ -17,6 +17,7 @@ public class DepositBuilding : Building
     public Text ResourceAmount2;
     public Text ResourceAmount3;
 
+	private bool isLoading = false;
     public ResearchBuilding researchBuilding;
 
     // Use this for initialization
@@ -55,65 +56,61 @@ public class DepositBuilding : Building
         }
     }
 
-    // Update is called once per frame
-    public new void FixedUpdate()
-    {
-        UpdateGalpão();
-        //if (Input.GetKeyDown(KeyCode.G) && (Type == BuildingTypes.Galpão))
-        //{
-        //    //foreach (Resource res in ResourceList)
-        //    //{
-        //    //    print(res.name + ":" + res.value);
-        //    //}
-        //    printf(research.ResourceList);
-
-        //}
-    }
-
+	// Update is called once per frame
+	public new void FixedUpdate()
+	{
+		if (State == BuildingState.Loading)
+		{
+			UpdateGalpão();
+		}
+	}
 	override public void Interact(Player player)
-    {
-        if (State == BuildingState.Idle)
-        {
-            State = BuildingState.Loading;
-            nextCollect = Time.time + collectRate;
-            player.depositResources(this); //Depositar todos os recursos
-
-            GetComponent<SpriteRenderer>().color = Color.blue;
-        }
-        if (State == BuildingState.UnderAttack)
-        {
-            State = BuildingState.SavingFromAttack;
-            nextAttack = Time.time + attackRate;
-
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
+	{
+        interacting = true;
+        ChangeState(player);
     }
 	public override void WhileInteracting(Player player)
 	{
-		
+        ChangeState(player);
 	}
 	public override void EndInteraction(Player player)
 	{
+		interacting = false;
+        ChangeState(player);
 	}
 
 
-	void UpdateGalpão()
+	void ChangeState(Player player)
     {
-        if (State == BuildingState.Loading && Time.time > nextCollect)
+        if (State == BuildingState.UnderAttack || State == BuildingState.SavingFromAttack)
         {
-            nextCollect = Time.time + collectRate;
-            State = BuildingState.Idle;
-            GetComponent<SpriteRenderer>().color = Color.white;
+            UpdateAttackState();
         }
-        else if (State == BuildingState.SavingFromAttack && Time.time > nextAttack)
+        else
         {
-            nextAttack = Time.time + attackRate;
-            State = BuildingState.Idle;
-
-            GetComponent<SpriteRenderer>().color = Color.white;
+			if(State == BuildingState.Loading) {
+				UpdateGalpão();
+			}
+			else if (interacting && State == BuildingState.Idle)
+            {
+				isLoading = true;
+				State = BuildingState.Loading;
+                currentCollect += Time.deltaTime;
+                player.depositResources(this); //Depositar todos os recursos
+                GetComponent<SpriteRenderer>().color = Color.blue;
+            }
         }
     }
-
+	void UpdateGalpão() {
+        currentCollect += Time.deltaTime;
+        if (currentCollect >= collectRate)
+        {
+            State = BuildingState.Idle;
+            currentCollect = 0;
+			isLoading = false;
+            GetComponent<SpriteRenderer>().color = Color.white;
+        }
+	}
 
     public void Collect(Player player)
     {
@@ -129,27 +126,15 @@ public class DepositBuilding : Building
 
     public void ShipInteract(Ship ship)
     {
-        //if (State == BuildingState.Idle)
-        if (State != BuildingState.UnderAttack)
-        {
-            State = BuildingState.Loading;
-            nextCollect = Time.time + collectRate;
-            ship.debugResources();
-            ship.depositResources(researchBuilding);
-            ship.debugResources();
-            ship.collectResources(this);
-            ship.debugResources();
-            ship.startWaiting();
+        State = BuildingState.Loading;
+        nextCollect = Time.time + collectRate;
+		ship.depositResources(researchBuilding);
+        //ship.debugResources();
+        ship.collectResources(this);
+        //ship.debugResources();
+        ship.startWaiting();
 
-            GetComponent<SpriteRenderer>().color = Color.blue;
-        }
-        if (State == BuildingState.UnderAttack)
-        {
-            State = BuildingState.SavingFromAttack;
-            nextAttack = Time.time + attackRate;
-
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
+        GetComponent<SpriteRenderer>().color = Color.blue;
     }
 
     public void changeResource1(Resource res)
@@ -167,4 +152,18 @@ public class DepositBuilding : Building
         ResourceAmount3.text = "x" + res.value;
     }
 
+	public new void TryRemoveAttack()
+    {
+        if (attackCurrentTime >= attackSaveTime)
+        {
+			if(isLoading) {
+				State = BuildingState.Loading;
+                GetComponent<SpriteRenderer>().color = Color.blue;
+			} else {
+				State = BuildingState.Idle;
+				GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            onAttackFinished();
+        }
+    }
 }

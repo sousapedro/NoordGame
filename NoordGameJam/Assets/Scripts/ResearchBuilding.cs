@@ -76,17 +76,6 @@ public class ResearchBuilding : Building
 	public new void FixedUpdate()
     {
 		ChangeState();
-        
-        //if (Input.GetKeyDown(KeyCode.G))
-        //{
-        //    //foreach (Resource res in ResourceList)
-        //    //{
-        //    //    print(res.name + ":" + res.value);
-        //    //}
-        //    if (landType == LandType.Colonia)
-        //        print(research.ResourceList[0].name);
-
-        //}
     }
 	public void SetResearch(Research research, ResearchCompleted callback) {
 		onResearchCompleted = callback;
@@ -107,13 +96,15 @@ public class ResearchBuilding : Building
 	override public void Interact(Player player)
     {
 		interacting = true;
+        ChangeState();
 	}
     public override void WhileInteracting(Player player)
     {
-		
+        ChangeState();
     }   
 	public override void EndInteraction(Player player) {
 		interacting = false;
+        ChangeState();
 	}
     
 	void ChangeState() {
@@ -147,7 +138,7 @@ public class ResearchBuilding : Building
 	void StopResearch() {
         if (State == BuildingState.Loading)
         {
-			print("research  stoped");
+			print("research stoped");
 			State = BuildingState.Idle;
 			GetComponent<SpriteRenderer>().color = Color.white;
         }
@@ -156,7 +147,6 @@ public class ResearchBuilding : Building
 	void EndResearch() {
 		State = BuildingState.Ready;
 		GetComponent<SpriteRenderer>().color = Color.white;
-		print("research  ended");
         RemoveResources();
 		onResearchCompleted();
 	}
