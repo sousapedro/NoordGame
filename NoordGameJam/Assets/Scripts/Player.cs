@@ -14,9 +14,22 @@ public class Player : MonoBehaviour {
     public PlayerType Type;
     private Rigidbody rb;
 
+    public AudioClip myAudioClip;
+    public AudioSource myAudioSource;
+
     private string HorizontalAxis = "Horizontal";
     private string VerticalAxis = "Vertical";
     private string ActionBtn;
+
+    [SerializeField]
+    private SpriteRenderer SpriteRes1;
+
+    [SerializeField]
+    private SpriteRenderer SpriteRes2;
+
+    [SerializeField]
+    private SpriteRenderer SpriteRes3;
+
 
     public List<Resource> MyResources;
 	// Use this for initialization
@@ -41,6 +54,13 @@ public class Player : MonoBehaviour {
             MyResources.Add(new Resource("Ouro"));
             MyResources.Add(new Resource("Armas"));
             MyResources.Add(new Resource("Tecnologia"));
+        }
+
+        if (myAudioSource != null)
+        {
+            myAudioSource.clip = myAudioClip;
+            myAudioSource.loop = true;
+            myAudioSource.Play();
         }
 	}
 	
@@ -108,6 +128,12 @@ public class Player : MonoBehaviour {
                 {
                     myRes.modifyResource(otherRes.value);// 1;
                     otherRes.modifyResource(-otherRes.value);
+                    if (SpriteRes1 != null && myRes.name == SpriteRes1.gameObject.name)
+                        SpriteRes1.sortingOrder = 5;
+                    else if (SpriteRes2 != null && myRes.name == SpriteRes2.gameObject.name)
+                        SpriteRes2.sortingOrder = 5;
+                    else if (SpriteRes3 != null && myRes.name == SpriteRes3.gameObject.name)
+                        SpriteRes3.sortingOrder = 5;
                 }
             }
 	    }
@@ -126,6 +152,13 @@ public class Player : MonoBehaviour {
                     otherRes.modifyResource(myRes.value);// 1;
                     //depot.ResourceAmount.Find(p => p[myRes.value
                     myRes.modifyResource(-myRes.value);
+
+                    if (SpriteRes1 != null && myRes.name == SpriteRes1.gameObject.name)
+                        SpriteRes1.sortingOrder = -5;
+                    else if (SpriteRes2 != null && myRes.name == SpriteRes2.gameObject.name)
+                        SpriteRes2.sortingOrder = -5;
+                    else if (SpriteRes3 != null && myRes.name == SpriteRes3.gameObject.name)
+                        SpriteRes3.sortingOrder = -5;
                 }
             }
         }

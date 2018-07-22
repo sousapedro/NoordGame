@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
 
 	private ResearchData researchData;
 
-	private float ResearchTime = 10;
+	private float ResearchTime = 180;
 
 	private float colonyCurrentTime = 0;
 	private float metropolyCurrentTime = 0;
@@ -34,6 +34,9 @@ public class GameController : MonoBehaviour
 
 	private int researchGoals = 0;
 	private int researchsCompleted = 0;
+
+    public AudioClip myAudioClip;
+    public AudioSource myAudioSource;
     
 	private GameController() {
 		GameController.instance = this;
@@ -47,6 +50,13 @@ public class GameController : MonoBehaviour
 		SetMetropolyResearch(researchData.GetNextMetropolyResearch());
 		progressBar.SetStep(researchData.getSize()/2);
 		researchGoals = researchData.getSize() / 2;
+
+        if (myAudioSource != null)
+        {
+            myAudioSource.clip = myAudioClip;
+            myAudioSource.loop = true;
+            myAudioSource.Play();
+        }
     }
 	public float GetResearchTime() {
 		return ResearchTime;

@@ -33,6 +33,10 @@ public class Ship : MonoBehaviour {
 	private Building lastBuilding = null;
     string pathStr = "";
 
+
+    public AudioClip myAudioClip;
+    public AudioSource myAudioSource;
+
     // Use this for initialization
     void Awake()
     {
@@ -44,6 +48,8 @@ public class Ship : MonoBehaviour {
         MyResources.Add(new Resource("Ouro"));
         MyResources.Add(new Resource("Armas"));
         MyResources.Add(new Resource("Tecnologia"));
+
+        myAudioSource.clip = myAudioClip;
     }
 
     // Update is called once per frame
@@ -54,11 +60,11 @@ public class Ship : MonoBehaviour {
     void FixedUpdate()
     {
         float step = Speed * Time.deltaTime;
-        //if (Path == WayToGo.Colonia && pathStr != "ColonyDepot")
-        //    pathStr = "ColonyDepot";
-        //else if (Path == WayToGo.Colonia && (pathStr != "MetropolyDepot" &&)
-        //    pathStr = "MetropolyDepot";
-        string pathStr = Path == WayToGo.Colonia ? "ColonyDepot" : "MetropolyDepot";
+        if (Path == WayToGo.Colonia && pathStr != "ColonyDepot")
+            pathStr = "ColonyDepot";
+        else if (Path == WayToGo.Metropole && (pathStr != "MetropolyDepot" && pathStr != "MetropolyDepot1"))
+            pathStr = Random.Range(0, 2) == 0 ? "MetropolyDepot" : "MetropolyDepot1";
+ //       pathStr = Path == WayToGo.Colonia ? "ColonyDepot" : "MetropolyDepot";
         
         // Move our position a step closer to the target.
 		if (State == ShipState.Travelling) {
@@ -79,6 +85,7 @@ public class Ship : MonoBehaviour {
                     Path = WayToGo.Colonia;
                 
                 State = ShipState.Travelling;
+                //myAudioSource.Play();
 			}
 		} else if(State == ShipState.OnAttack) {
 			//do nothing?
@@ -153,6 +160,8 @@ public class Ship : MonoBehaviour {
     {
         State = ShipState.Waiting;
 		currentTime = 0;
+        if(myAudioSource != null)
+            myAudioSource.Play();
     }
 
     public void debugResources()

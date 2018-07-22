@@ -49,6 +49,10 @@ public abstract class Building : MonoBehaviour {
 
     public Image AttackIcon;
 
+    public AudioClip myAudioClip;
+    public AudioSource myAudioSource;
+    public AudioClip myAtkAudioClip;
+
 	public Action<bool> attackFinishedCallbacks;
 
 	public bool isUnderAttack
@@ -80,6 +84,11 @@ public abstract class Building : MonoBehaviour {
 	public void SetUnderAttack(AttackFinished attackFinished) {
 		State = BuildingState.UnderAttack;
         ShowAttackIcon();
+        if (myAudioSource != null)
+        {
+            myAudioSource.clip = myAtkAudioClip;
+            myAudioSource.Play();
+        }
 		//GetComponent<SpriteRenderer>().color = Color.red;
 		attackCurrentTime = 0;
 		onAttackFinished = attackFinished;
@@ -100,7 +109,12 @@ public abstract class Building : MonoBehaviour {
 		} else if(State == BuildingState.SavingFromAttack) {
 			State = BuildingState.UnderAttack;
             ShowAttackIcon();
-			GetComponent<SpriteRenderer>().color = Color.red;
+            //if (myAudioSource != null)
+            //{
+            //    myAudioSource.clip = myAtkAudioClip;
+            //    myAudioSource.Play();
+            //}
+			//GetComponent<SpriteRenderer>().color = Color.red;
 		}
     }
 	public void TryRemoveAttack() {

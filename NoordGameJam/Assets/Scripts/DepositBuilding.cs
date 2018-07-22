@@ -97,7 +97,7 @@ public class DepositBuilding : Building
 				State = BuildingState.Loading;
                 currentCollect += Time.deltaTime;
                 player.depositResources(this); //Depositar todos os recursos
-                GetComponent<SpriteRenderer>().color = Color.blue;
+                GetComponent<SpriteRenderer>().color = Color.grey;
             }
         }
     }
@@ -120,7 +120,7 @@ public class DepositBuilding : Building
             nextCollect = Time.time + collectRate;
             player.collectResources(ResourceList);//Coletar todos os recursos
 
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponent<SpriteRenderer>().color = Color.grey;
         }
     }
 
@@ -134,7 +134,7 @@ public class DepositBuilding : Building
         //ship.debugResources();
         ship.startWaiting();
 
-        GetComponent<SpriteRenderer>().color = Color.blue;
+        GetComponent<SpriteRenderer>().color = Color.grey;
     }
 
     public void changeResource1(Resource res)
@@ -158,7 +158,7 @@ public class DepositBuilding : Building
         {
 			if(isLoading) {
 				State = BuildingState.Loading;
-                GetComponent<SpriteRenderer>().color = Color.blue;
+                GetComponent<SpriteRenderer>().color = Color.grey;
 			} else {
 				State = BuildingState.Idle;
 				GetComponent<SpriteRenderer>().color = Color.white;

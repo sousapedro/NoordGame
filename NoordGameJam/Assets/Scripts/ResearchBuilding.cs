@@ -121,7 +121,7 @@ public class ResearchBuilding : Building
 
 			currentCollect += Time.deltaTime;
 
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponent<SpriteRenderer>().color = Color.grey;
         }
         if (State == BuildingState.Loading)
         {

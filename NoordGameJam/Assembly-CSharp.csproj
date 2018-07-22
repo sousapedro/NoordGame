@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Building.cs" />
      <Compile Include="Assets\Scripts\DepositBuilding.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\GameProgressBar.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Research.cs" />
      <Compile Include="Assets\Scripts\ResearchBuilding.cs" />

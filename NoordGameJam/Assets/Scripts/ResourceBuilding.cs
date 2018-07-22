@@ -56,6 +56,11 @@ public class ResourceBuilding : Building
 				}
 				else if (State == BuildingState.Ready)
 				{
+                    if (myAudioSource != null)
+                    {
+                        myAudioSource.clip = myAudioClip;
+                        myAudioSource.Play();
+                    }
 					State = BuildingState.Idle;
 					foreach (Resource res in ResourceList)
 					{
