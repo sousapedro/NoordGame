@@ -43,7 +43,7 @@ public abstract class Building : MonoBehaviour {
 	public bool interacting = false;
 
 	public float attackCurrentTime = 0.0f;
-	public float attackSaveTime = 1.5f;
+	public float attackSaveTime = 6f;
 	public delegate void AttackFinished();
 	public AttackFinished onAttackFinished;
 
@@ -104,6 +104,8 @@ public abstract class Building : MonoBehaviour {
 		if(interacting) {
 			if (State == BuildingState.UnderAttack)
 			{
+                Player player = GameController.instance.GetMetropolyPlayer();
+                player.myAudioSource.volume = 100;
 				State = BuildingState.SavingFromAttack;
 				attackBar.SetTimerBarAttack(attackSaveTime);
 				showAttackBar();
@@ -116,13 +118,15 @@ public abstract class Building : MonoBehaviour {
 				TryRemoveAttack();
 			}
 		} else if(State == BuildingState.SavingFromAttack) {
-			State = BuildingState.UnderAttack;
+            GameController.instance.GetMetropolyPlayer().myAudioSource.volume = 0;
+            State = BuildingState.UnderAttack;
             ShowAttackIcon();
 		}
     }
 	public void TryRemoveAttack() {
 		if(attackCurrentTime >= attackSaveTime) {
-			State = lastState;
+            GameController.instance.GetMetropolyPlayer().myAudioSource.volume = 0;
+            State = lastState;
             HideAttackIcon();
 			onAttackFinished();
 			hideAttackBar();

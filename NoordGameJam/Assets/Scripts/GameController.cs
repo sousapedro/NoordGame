@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class GameController : MonoBehaviour
 
 	public GameProgressBar progressBar;
 
+
 	private ResearchData researchData;
 
-	private float ResearchTime = 180;
+	private float ResearchTime = 60;
 
 	private float colonyCurrentTime = 0;
 	private float metropolyCurrentTime = 0;
+    public Player metropolyPlayer;
 
 	private float colonyCurrentAttackTime = 0;
 	private float metropolyCurrentAttackTime = 0;
@@ -37,6 +40,9 @@ public class GameController : MonoBehaviour
 
     public AudioClip myAudioClip;
     public AudioSource myAudioSource;
+
+    public Image endGameWin;
+    public Image endGameLoose;
     
 	private GameController() {
 		GameController.instance = this;
@@ -68,6 +74,9 @@ public class GameController : MonoBehaviour
 		UpdateColonyAttack();
 		UpdateMetropolyTime();
 		UpdateMetropolyAttack();
+    }
+    public Player GetMetropolyPlayer() {
+        return metropolyPlayer;
     }
 	public void OnMetropolyResearchCompleted() {
 		Research research = metropolyResearchBuilding.research;
@@ -131,10 +140,12 @@ public class GameController : MonoBehaviour
 		hasEnded = true;
 		if(success) {
 			print("end game");
-			SceneManager.LoadScene("EndGame");
+            endGameWin.gameObject.SetActive(true);
+            //SceneManager.LoadScene("EndGame");
         } else {
 			print("game over");
-			SceneManager.LoadScene("GameOver");
+			//SceneManager.LoadScene("GameOver");
+            endGameLoose.gameObject.SetActive(true);
 		}
 		print("game ended!");
 	}

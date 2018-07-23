@@ -139,17 +139,17 @@ public class DepositBuilding : Building
 
     public void changeResource1(Resource res)
     {
-        ResourceAmount1.text = "x" + res.value;
+        ResourceAmount1.text = "" + res.value;
     }
 
     public void changeResource2(Resource res)
     {
-        ResourceAmount2.text = "x" + res.value;
+        ResourceAmount2.text = "" + res.value;
     }
 
     public void changeResource3(Resource res)
     {
-        ResourceAmount3.text = "x" + res.value;
+        ResourceAmount3.text = "" + res.value;
     }
 
 	public new void TryRemoveAttack()

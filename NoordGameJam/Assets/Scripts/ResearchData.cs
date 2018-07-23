@@ -13,29 +13,29 @@ public class ResearchData
 		colonyResearchs = new List<Research>();
 		metropolyResearchs = new List<Research>();
 		//wood  |   documents   |   sugar
-		//colonyResearchs.Add(Research.NewColonyResearch(5, 5, 5));
-		//colonyResearchs.Add(Research.NewColonyResearch(8, 8, 5));
-		//colonyResearchs.Add(Research.NewColonyResearch(10, 10, 10));
-		//colonyResearchs.Add(Research.NewColonyResearch(12, 12, 12));
-		//colonyResearchs.Add(Research.NewColonyResearch(15, 15, 15));
-		//colonyResearchs.Add(Research.NewColonyResearch(20, 20, 20));
-		//colonyResearchs.Add(Research.NewColonyResearch(25, 25, 25));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
-        colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+		colonyResearchs.Add(Research.NewColonyResearch(2, 2, 2));
+		colonyResearchs.Add(Research.NewColonyResearch(4, 1, 2));
+		colonyResearchs.Add(Research.NewColonyResearch(3, 3, 4));
+		colonyResearchs.Add(Research.NewColonyResearch(5, 2, 1));
+		colonyResearchs.Add(Research.NewColonyResearch(5, 3, 2));
+		colonyResearchs.Add(Research.NewColonyResearch(1, 7, 3));
+		colonyResearchs.Add(Research.NewColonyResearch(8, 3, 5));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
+        //colonyResearchs.Add(Research.NewColonyResearch(0, 0, 0));
 
         //gold   |   Guns    |    Tecnology
-		metropolyResearchs.Add(Research.NewMetropolyResearch(5, 5, 5));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(8, 8, 5));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(10, 10, 10));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(12, 12, 12));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(15, 15, 15));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(20, 20, 20));
-		metropolyResearchs.Add(Research.NewMetropolyResearch(25, 25, 25));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(3, 1, 1));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(2, 2, 2));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(2, 1, 3));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(4, 3, 2));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(2, 1, 5));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(4, 2, 3));
+		metropolyResearchs.Add(Research.NewMetropolyResearch(4, 5, 4));
 	}
 
 	public Research GetNextColonyResearch() {
